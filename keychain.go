@@ -202,6 +202,8 @@ var (
 	ServiceKey = attrKey(C.CFTypeRef(C.kSecAttrService))
 	// LabelKey is for kSecAttrLabel
 	LabelKey = attrKey(C.CFTypeRef(C.kSecAttrLabel))
+	// ApplicationLabelKey is for kSecAttrApplicationLabel
+	ApplicationLabelKey = attrKey(C.CFTypeRef(C.kSecAttrApplicationLabel))
 	// AccountKey is for kSecAttrAccount
 	AccountKey = attrKey(C.CFTypeRef(C.kSecAttrAccount))
 	// AccessGroupKey is for kSecAttrAccessGroup
@@ -341,6 +343,10 @@ func (k *Item) SetAccount(a string) {
 // SetLabel sets the label attribute
 func (k *Item) SetLabel(l string) {
 	k.SetString(LabelKey, l)
+}
+
+func (k *Item) SetApplicationLabel(l string) {
+	k.SetString(ApplicationLabelKey, l)
 }
 
 // SetDescription sets the description attribute
