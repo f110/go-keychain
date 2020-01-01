@@ -180,7 +180,7 @@ const (
 	KeyTypeCAST
 	KeyTypeECDSA
 	KeyTypeEC
-	KeyTypeECSecPrimeRandom
+	KeyTypeECSECPrimeRandom
 )
 
 var keyTypeRef = map[KeyType]C.CFTypeRef{
@@ -194,7 +194,7 @@ var keyTypeRef = map[KeyType]C.CFTypeRef{
 	KeyTypeCAST:             C.CFTypeRef(C.kSecAttrKeyTypeCAST),
 	KeyTypeECDSA:            C.CFTypeRef(C.kSecAttrKeyTypeECDSA),
 	KeyTypeEC:               C.CFTypeRef(C.kSecAttrKeyTypeEC),
-	KeyTypeECSecPrimeRandom: C.CFTypeRef(C.kSecAttrKeyTypeECSecPrimeRandom),
+	KeyTypeECSECPrimeRandom: C.CFTypeRef(C.kSecAttrKeyTypeECSECPrimeRandom),
 }
 
 var (
