@@ -153,6 +153,50 @@ var secClassTypeRef = map[SecClass]C.CFTypeRef{
 	SecClassKey:              C.CFTypeRef(C.kSecClassKey),
 }
 
+type KeyClass int
+
+const (
+	KeyClassPublic KeyClass = iota + 1
+	KeyClassPrivate
+	KeyClassSymmetric
+)
+
+var keyClassRef = map[KeyClass]C.CFTypeRef{
+	KeyClassPublic:    C.CFTypeRef(C.kSecAttrKeyClassPublic),
+	KeyClassPrivate:   C.CFTypeRef(C.kSecAttrKeyClassPrivate),
+	KeyClassSymmetric: C.CFTypeRef(C.kSecAttrKeyClassSymmetric),
+}
+
+type KeyType int
+
+const (
+	KeyTypeRSA KeyType = iota + 1
+	KeyTypeDSA
+	KeyTypeAES
+	KeyTypeDES
+	KeyType3DES
+	KeyTypeRC4
+	KeyTypeRC2
+	KeyTypeCAST
+	KeyTypeECDSA
+	KeyTypeEC
+	KeyTypeECSecPrimeRandom
+)
+
+var keyTypeRef = map[KeyType]C.CFTypeRef{
+	KeyTypeRSA:              C.CFTypeRef(C.kSecAttrKeyTypeRSA),
+	KeyTypeDSA:              C.CFTypeRef(C.kSecAttrKeyTypeDSA),
+	KeyTypeAES:              C.CFTypeRef(C.kSecAttrKeyTypeAES),
+	KeyTypeDES:              C.CFTypeRef(C.kSecAttrKeyTypeDES),
+	KeyType3DES:             C.CFTypeRef(C.kSecAttrKeyType3DES),
+	KeyTypeRC4:              C.CFTypeRef(C.kSecAttrKeyTypeRC4),
+	KeyTypeRC2:              C.CFTypeRef(C.kSecAttrKeyTypeRC2),
+	KeyTypeCAST:             C.CFTypeRef(C.kSecAttrKeyTypeCAST),
+	KeyTypeECDSA:            C.CFTypeRef(C.kSecAttrKeyTypeECDSA),
+	KeyTypeEC:               C.CFTypeRef(C.kSecAttrKeyTypeEC),
+	KeyTypeECSecPrimeRandom: C.CFTypeRef(C.kSecAttrKeyTypeECSecPrimeRandom),
+}
+
 var (
 	// ServiceKey is for kSecAttrService
 	ServiceKey = attrKey(C.CFTypeRef(C.kSecAttrService))
@@ -170,6 +214,26 @@ var (
 	CreationDateKey = attrKey(C.CFTypeRef(C.kSecAttrCreationDate))
 	// ModificationDateKey is for kSecAttrModificationDate
 	ModificationDateKey = attrKey(C.CFTypeRef(C.kSecAttrModificationDate))
+	// KeyClassKey is for kSecAttrKeyClass
+	KeyClassKey = attrKey(C.CFTypeRef(C.kSecAttrKeyClass))
+	// KeyTypeKey is for kSecAttrKeyClass
+	KeyTypeKey = attrKey(C.CFTypeRef(C.kSecAttrKeyType))
+	// KeySizeInBits is for kSecAttrKeySizeInBits
+	KeySizeInBitsKey = attrKey(C.CFTypeRef(C.kSecAttrKeySizeInBits))
+	// CanEncryptKey is for kSecAttrCanEncrypt
+	CanEncryptKey = attrKey(C.CFTypeRef(C.kSecAttrCanEncrypt))
+	// CanDecryptKey is for kSecAttrCanDecrypt
+	CanDecryptKey = attrKey(C.CFTypeRef(C.kSecAttrCanDecrypt))
+	// CanDeriveKey is for kSecAttrCanDerive
+	CanDeriveKey = attrKey(C.CFTypeRef(C.kSecAttrCanDerive))
+	// CanSignKey is for kSecAttrCanSign
+	CanSignKey = attrKey(C.CFTypeRef(C.kSecAttrCanSign))
+	// CanVerifyKey is for kSecAttrCanVerify
+	CanVerifyKey = attrKey(C.CFTypeRef(C.kSecAttrCanVerify))
+	// CanWrapKey is for kSecAttrCanWrap
+	CanWrapKey = attrKey(C.CFTypeRef(C.kSecAttrCanWrap))
+	// CanUnwrapKey is for kSecAttrCanUnwrap
+	CanUnwrapKey = attrKey(C.CFTypeRef(C.kSecAttrCanUnwrap))
 )
 
 // Synchronizable is the items synchronizable status
@@ -293,6 +357,18 @@ func (k *Item) SetData(b []byte) {
 	}
 }
 
+func (k *Item) SetKeyClass(c KeyClass) {
+	k.attr[KeyClassKey] = keyClassRef[c]
+}
+
+func (k *Item) SetKeyType(c KeyType) {
+	k.attr[KeyTypeKey] = keyTypeRef[c]
+}
+
+func (k *Item) SetKeySizeInBits(bits int) {
+	k.attr[KeySizeInBitsKey] = bits
+}
+
 // SetAccessGroup sets the access group attribute
 func (k *Item) SetAccessGroup(ag string) {
 	k.SetString(AccessGroupKey, ag)
@@ -338,6 +414,34 @@ func (k *Item) SetReturnData(b bool) {
 // SetReturnRef enables returning references on query
 func (k *Item) SetReturnRef(b bool) {
 	k.attr[ReturnRefKey] = b
+}
+
+func (k *Item) SetCanEncrypt(b bool) {
+	k.attr[CanEncryptKey] = b
+}
+
+func (k *Item) SetCanDecrypt(b bool) {
+	k.attr[CanDecryptKey] = b
+}
+
+func (k *Item) SetCanDerive(b bool) {
+	k.attr[CanDeriveKey] = b
+}
+
+func (k *Item) SetCanSign(b bool) {
+	k.attr[CanSignKey] = b
+}
+
+func (k *Item) SetCanVerify(b bool) {
+	k.attr[CanVerifyKey] = b
+}
+
+func (k *Item) SetCanWrap(b bool) {
+	k.attr[CanWrapKey] = b
+}
+
+func (k *Item) SetCanUnwrap(b bool) {
+	k.attr[CanUnwrapKey] = b
 }
 
 // NewItem is a new empty keychain item
